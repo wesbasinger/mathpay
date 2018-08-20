@@ -14,20 +14,20 @@ const Header = (props) => {
       </button>
 
       <div className="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul className="nav navbar-nav">
-          <li><Link to="/about">About</Link></li>
+        <ul className="nav navbar-nav mr-auto">
+          <li className="nav-item"><Link className="nav-link" to="/about">About</Link></li>
 
           {
-            props.user ? <li><Link to="/txlog">Transaction Log</Link></li> : ""
+            props.user ? <li className="nav-item"><Link className="nav-link" to="/txlog">Transaction Log</Link></li> : ""
           }
           {
-            props.user ? <li><Link to="/lookup">Lookup Balance</Link></li> : ""
+            props.user ? <li className="nav-item"><Link className="nav-link" to="/lookup">Lookup Balance</Link></li> : ""
           }
           {
-            props.user ? <li><Link to="/solve">Solve for Pay</Link></li> : ""
+            props.user ? <li className="nav-item"><Link className="nav-link" to="/solve">Solve for Pay</Link></li> : ""
           }
           {
-            props.user ? <li><Link to="/store">Store</Link></li> : ""
+            props.user ? <li className="nav-item"><Link className="nav-link" to="/store">Store</Link></li> : ""
           }
 
         </ul>
