@@ -11,6 +11,7 @@ import Header from './Components/Header';
 import Home from './Components/Home';
 import About from './Components/About';
 import Lookup from './Components/Lookup';
+import TXLog from './Components/TXLog';
 
 // const OWNER_PAYMENT_ADDRESS = "2MsbLHWLuQnGnvCKS3MFSKPaRAhBDhSTP68";
 
@@ -96,6 +97,11 @@ class App extends React.Component {
           <Route
             path="/lookup"
             render={(props) => <Lookup {...props} balance={this.state.balance} />}
+          />
+
+          <Route
+            path="/txlog"
+            render={(props) => <TXLog {...props} BACKEND_URL={BACKEND_URL} user={this.state.user}/>}
           />
 
 
