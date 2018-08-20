@@ -9,6 +9,7 @@ import secret from './secret.js';
 
 import Header from './Components/Header';
 import Home from './Components/Home';
+import About from './Components/About';
 
 // const OWNER_PAYMENT_ADDRESS = "2MsbLHWLuQnGnvCKS3MFSKPaRAhBDhSTP68";
 
@@ -85,6 +86,10 @@ class App extends React.Component {
           <Route
             exact path="/"
             render={(props) => <Home {...props} user={this.state.user}/>}
+          />
+          <Route
+            path="/about"
+            component={About}
           />
 
 
