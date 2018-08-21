@@ -14,12 +14,9 @@ import Lookup from './Components/Lookup';
 import TXLog from './Components/TXLog';
 import Solve from './Components/Solve';
 import SolveDetail from './Components/SolveDetail';
-
-
-// const OWNER_PAYMENT_ADDRESS = "2MsbLHWLuQnGnvCKS3MFSKPaRAhBDhSTP68";
+import Store from './Components/Store';
 
 const BACKEND_URL = "https://mp-backend.herokuapp.com";
-
 
 class App extends React.Component {
 
@@ -36,7 +33,7 @@ class App extends React.Component {
 
     this.responseGoogle = this.responseGoogle.bind(this);
     this.logout = this.logout.bind(this);
-    // this.buy = this.buy.bind(this);
+    this.buy = this.buy.bind(this);
     this.handleBountySubmission = this.handleBountySubmission.bind(this);
     this.refreshBounties = this.refreshBounties.bind(this);
     this.refreshBalance = this.refreshBalance.bind(this);
@@ -45,6 +42,36 @@ class App extends React.Component {
 
   componentDidMount() {
     this.refreshBounties();
+
+    axios.get(`${BACKEND_URL}/store`)
+      .then((response) => {
+        this.setState({products: response.data})
+      })
+  }
+
+  buy(product) {
+
+    alert("Purchase request received, please wait for transaction to process.");
+
+    // flow would go like this
+    // 1. make post request to backend with product object
+    // 2. wait for response and branch based on status message
+
+    axios.post(`${BACKEND_URL}/buy`,
+      {
+        "product" : product,
+        "email" : this.state.user.email,
+        "address" : this.state.address
+      }
+    ).then((resp) => {
+      if (resp.data.status === "success") {
+        alert("Purchase was successful.  Check your email for a receipt.")
+        this.refreshBalance();
+      } else {
+        alert("Purchase did not go through as intended.  May be insufficient funds.");
+        this.refreshBalance();
+      }
+    })
   }
 
   responseGoogle(resp) {
@@ -80,7 +107,6 @@ class App extends React.Component {
 
   refreshBounties() {
 
-    console.log("Heard request to refresh bounties.")
     axios.get(`${BACKEND_URL}/bounties`)
       .then((response) => {
         this.setState({bounties: response.data})
@@ -147,6 +173,10 @@ class App extends React.Component {
             render={(props) => <SolveDetail {...props} bounties={this.state.bounties} onBountySubmission={this.handleBountySubmission}/>}
           />
 
+          <Route
+            path="/store"
+            render={(props) => <Store {...props} handleBuy={this.buy} handleTokenPurchase={this.purchaseToken} user={this.state.user} products={this.state.products} />}
+          />
 
         </main>
       </div>
@@ -156,7 +186,7 @@ class App extends React.Component {
 }
 
 ReactDOM.render(
-  <BrowserRouter>
+  <BrowserRouter basename={process.env.PUBLIC_URL}>
     <App />
   </BrowserRouter>, document.getElementById('root')
 )
