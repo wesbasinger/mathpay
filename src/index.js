@@ -13,6 +13,7 @@ import About from './Components/About';
 import Lookup from './Components/Lookup';
 import TXLog from './Components/TXLog';
 import Solve from './Components/Solve';
+import SolveDetail from './Components/SolveDetail';
 
 
 // const OWNER_PAYMENT_ADDRESS = "2MsbLHWLuQnGnvCKS3MFSKPaRAhBDhSTP68";
@@ -122,6 +123,11 @@ class App extends React.Component {
           <Route
             path="/solve"
             render={(props) => <Solve {...props} bounties={this.state.bounties} />}
+          />
+
+          <Route
+            path="/bounty/:id"
+            render={(props) => <SolveDetail {...props} bounties={this.state.bounties} onBountySubmission={this.handleBountySubmission}/>}
           />
 
 
