@@ -37,7 +37,7 @@ class App extends React.Component {
     this.responseGoogle = this.responseGoogle.bind(this);
     this.logout = this.logout.bind(this);
     // this.buy = this.buy.bind(this);
-    // this.handleBountySubmission = this.handleBountySubmission.bind(this);
+    this.handleBountySubmission = this.handleBountySubmission.bind(this);
     this.refreshBounties = this.refreshBounties.bind(this);
     this.refreshBalance = this.refreshBalance.bind(this);
     // this.purchaseToken = this.purchaseToken.bind(this);
@@ -93,6 +93,23 @@ class App extends React.Component {
       address: "",
       balance: null
     })
+  }
+
+  handleBountySubmission(bountyId, answer, reward) {
+
+    alert("Got answer submission, checking on server...")
+    //@app.route('/bounty/<id>/<answer>/<address>>', methods=['PUT'])
+    axios.put(`${BACKEND_URL}/bounty/${bountyId}/${answer}/${this.state.address}`)
+      .then((resp) => {
+        if(resp.data.status == "success") {
+          alert(`You got it!  Bounty of ${reward} paid to your account.`);
+          this.refreshBounties();
+          this.refreshBalance();
+        } else {
+          alert("Sorry, not right :-)  Try again");
+          this.refreshBounties();
+        }
+      })
   }
 
   render() {
