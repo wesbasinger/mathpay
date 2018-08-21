@@ -18,6 +18,8 @@ import Store from './Components/Store';
 
 const BACKEND_URL = "https://mp-backend.herokuapp.com";
 
+const JUKEBOX_TOKEN_PRICE = 30;
+
 class App extends React.Component {
 
   constructor(props) {
@@ -37,7 +39,7 @@ class App extends React.Component {
     this.handleBountySubmission = this.handleBountySubmission.bind(this);
     this.refreshBounties = this.refreshBounties.bind(this);
     this.refreshBalance = this.refreshBalance.bind(this);
-    // this.purchaseToken = this.purchaseToken.bind(this);
+    this.purchaseToken = this.purchaseToken.bind(this);
   }
 
   componentDidMount() {
@@ -74,11 +76,32 @@ class App extends React.Component {
     })
   }
 
+  purchaseToken() {
+
+    alert("Token purchase request received, please wait for transaction to process.");
+
+    axios.post(`${BACKEND_URL}/token`,
+      {
+        "email" : this.state.user.email,
+        "product" : {
+          "price" : JUKEBOX_TOKEN_PRICE
+        },
+        "address" : this.state.address
+      }
+    ).then((resp) => {
+      if(resp.data.status === "success") {
+        alert(`Token purchase was successful.  Token is: ${resp.data.token} and has been emailed to you as well.`);
+        this.refreshBalance();
+      } else {
+        alert("Token purchase not completed, insufficient funds or server error.")
+        this.refreshBalance();
+      }
+    })
+  }
+
   responseGoogle(resp) {
 
     const user = resp.profileObj;
-
-
 
     // 2 cases: user has logged in and has payment address
     // or user is brand new and needs an address created.
@@ -175,7 +198,7 @@ class App extends React.Component {
 
           <Route
             path="/store"
-            render={(props) => <Store {...props} handleBuy={this.buy} handleTokenPurchase={this.purchaseToken} user={this.state.user} products={this.state.products} />}
+            render={(props) => <Store {...props} handleBuy={this.buy} handleTokenPurchase={this.purchaseToken} user={this.state.user} products={this.state.products} JUKEBOX_TOKEN_PRICE={JUKEBOX_TOKEN_PRICE}/>}
           />
 
         </main>

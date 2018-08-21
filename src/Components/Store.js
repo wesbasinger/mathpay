@@ -17,7 +17,7 @@ const Store = (props) => {
         <img width="100" alt="jukebox" src="http://res.freestockphotos.biz/pictures/9/9611-illustration-of-a-jukebox-pv.png"/>
         <p className="lead">Description</p>
         <p>With purchase of this digital token, you will be able to play a song of your choice on the class jukebox.</p>
-        <p>Price: 30</p>
+        <p>Price: {props.JUKEBOX_TOKEN_PRICE}</p>
         {
           props.user ?
             <button onClick={() => {
