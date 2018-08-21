@@ -12,6 +12,8 @@ import Home from './Components/Home';
 import About from './Components/About';
 import Lookup from './Components/Lookup';
 import TXLog from './Components/TXLog';
+import Solve from './Components/Solve';
+
 
 // const OWNER_PAYMENT_ADDRESS = "2MsbLHWLuQnGnvCKS3MFSKPaRAhBDhSTP68";
 
@@ -35,9 +37,13 @@ class App extends React.Component {
     this.logout = this.logout.bind(this);
     // this.buy = this.buy.bind(this);
     // this.handleBountySubmission = this.handleBountySubmission.bind(this);
-    // this.refreshBounties = this.refreshBounties.bind(this);
+    this.refreshBounties = this.refreshBounties.bind(this);
     this.refreshBalance = this.refreshBalance.bind(this);
     // this.purchaseToken = this.purchaseToken.bind(this);
+  }
+
+  componentDidMount() {
+    this.refreshBounties();
   }
 
   responseGoogle(resp) {
@@ -71,6 +77,15 @@ class App extends React.Component {
 
   }
 
+  refreshBounties() {
+
+    console.log("Heard request to refresh bounties.")
+    axios.get(`${BACKEND_URL}/bounties`)
+      .then((response) => {
+        this.setState({bounties: response.data})
+      })
+  }
+
   logout() {
     this.setState({
       user: null,
@@ -102,6 +117,11 @@ class App extends React.Component {
           <Route
             path="/txlog"
             render={(props) => <TXLog {...props} BACKEND_URL={BACKEND_URL} user={this.state.user}/>}
+          />
+
+          <Route
+            path="/solve"
+            render={(props) => <Solve {...props} bounties={this.state.bounties} />}
           />
 
 
