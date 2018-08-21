@@ -6,7 +6,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack --watch",
     "start": "webpack-dev-server --open",
-    "build": "webpack --mode=none"
+    "build": "webpack --mode=none",
+    "predeploy": "webpack --mode=none",
+    "deploy": "gh-pages -d dist"
   },
   "keywords": [
     "math",
@@ -21,6 +23,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "file-loader": "^1.1.11",
+    "gh-pages": "^1.2.0",
     "webpack": "^4.16.5",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.5"
