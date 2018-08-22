@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { BrowserRouter, Route } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import axios from 'axios';
 
@@ -167,39 +167,43 @@ class App extends React.Component {
         <Header user={this.state.user} responseGoogle={this.responseGoogle} logout={this.logout}/>
         <main role="main" className="container">
 
-          <Route
-            exact path="/"
-            render={(props) => <Home {...props} user={this.state.user}/>}
-          />
-          <Route
-            path="/about"
-            component={About}
-          />
+          <Switch>
 
-          <Route
-            path="/lookup"
-            render={(props) => <Lookup {...props} balance={this.state.balance} />}
-          />
+            <Route
+              exact path="/"
+              render={(props) => <Home {...props} user={this.state.user}/>}
+            />
+            <Route
+              path="/about"
+              component={About}
+            />
 
-          <Route
-            path="/txlog"
-            render={(props) => <TXLog {...props} BACKEND_URL={BACKEND_URL} user={this.state.user}/>}
-          />
+            <Route
+              path="/lookup"
+              render={(props) => <Lookup {...props} balance={this.state.balance} />}
+            />
 
-          <Route
-            path="/solve"
-            render={(props) => <Solve {...props} bounties={this.state.bounties} />}
-          />
+            <Route
+              path="/txlog"
+              render={(props) => <TXLog {...props} BACKEND_URL={BACKEND_URL} user={this.state.user}/>}
+            />
 
-          <Route
-            path="/bounty/:id"
-            render={(props) => <SolveDetail {...props} bounties={this.state.bounties} onBountySubmission={this.handleBountySubmission}/>}
-          />
+            <Route
+              path="/solve"
+              render={(props) => <Solve {...props} bounties={this.state.bounties} />}
+            />
 
-          <Route
-            path="/store"
-            render={(props) => <Store {...props} handleBuy={this.buy} handleTokenPurchase={this.purchaseToken} user={this.state.user} products={this.state.products} JUKEBOX_TOKEN_PRICE={JUKEBOX_TOKEN_PRICE}/>}
-          />
+            <Route
+              path="/bounty/:id"
+              render={(props) => <SolveDetail {...props} bounties={this.state.bounties} onBountySubmission={this.handleBountySubmission}/>}
+            />
+
+            <Route
+              path="/store"
+              render={(props) => <Store {...props} handleBuy={this.buy} handleTokenPurchase={this.purchaseToken} user={this.state.user} products={this.state.products} JUKEBOX_TOKEN_PRICE={JUKEBOX_TOKEN_PRICE}/>}
+            />
+
+          </Switch>
 
         </main>
       </div>
