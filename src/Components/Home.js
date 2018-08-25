@@ -1,18 +1,19 @@
 import React from 'react';
 
-const Home = (props) => {
+import MainArt from './MainArt.png';
 
-    return(
+ const Home = (props) => {
+     return(
       <div className="starter-template">
-        <img alt="Math Pay Logo" src="https://raw.githubusercontent.com/wesbasinger/mathpay/master/src/Components/MainArt.png" width={500}/>
+        <img alt="Math Pay Logo" src={MainArt} width={500}/>
         <h2>
           Server Status: {
             props.user ? "Connected" : "Not connected"
-          }
-        </h2>
-      </div>
-    )
+           }
+         </h2>
+       </div>
+     )
 
-}
+ }
 
-export default Home;
+ export default Home;

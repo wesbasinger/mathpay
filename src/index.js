@@ -213,7 +213,7 @@ class App extends React.Component {
 }
 
 ReactDOM.render(
-  <BrowserRouter basename={process.env.PUBLIC_URL}>
+  <BrowserRouter basename={"/mathpay"}>
     <App />
   </BrowserRouter>, document.getElementById('root')
 )
